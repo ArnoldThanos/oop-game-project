@@ -30,7 +30,7 @@ At the moment, the game is a bit broken. This project will have you first fix th
 
 ### 1. Let's fix the enemy bug
 
-If you look at the game running for a while, you will notice that an enemy never appears at the far left of the screen. This is due to a bug that was intentionally introduced in the `addEnemy` method of the `Engine` class. Find the bug and fix it.
+If you look at the game running for a while, you will notice that an enemy never appears at the far left of the screen. This is due to a bug that was intentionally introduced in the `addEnemy` method of the `Engine` class. Find the bug and fix it. Use the debugger keyword to set breakpoints to find out more about your program while it's running.
 
 ### 2. Let's make the game actually end
 
