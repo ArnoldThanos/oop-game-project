@@ -29,9 +29,10 @@ imageFilenames.forEach(function(imgName) {
 
 // This section is where you will be doing most of your coding
 class Enemy {
-  constructor(root, xPos) {
+  constructor(root, enemySpot) {
+    this.spot = enemySpot
     this.root = root
-    this.x = xPos
+    this.x = enemySpot * ENEMY_WIDTH
     this.y = -ENEMY_HEIGHT
     let img = document.createElement("img")
     img.src = "images/enemy.png"
@@ -58,6 +59,11 @@ class Enemy {
   destroy() {
     // When an enemy reaches the end of the screen, the corresponding DOM element should be destroyed
     this.root.removeChild(this.domElement)
+    this.destroyed = true
+  }
+
+  isDestroyed() {
+    return this.destroyed
   }
 }
 
@@ -97,13 +103,13 @@ class Player {
 class Text {
   constructor(root, xPos, yPos) {
     this.root = root
-
     let span = document.createElement("span")
     span.style.position = "absolute"
     span.style.left = xPos
     span.style.top = yPos
+    span.style.color = "white"
     span.style.font = "bold 30px Impact"
-
+    span.style.zIndex = 2000
     root.appendChild(span)
     this.domElement = span
   }
@@ -158,11 +164,7 @@ class Engine {
       this.enemies = []
     }
 
-    while (
-      this.enemies.filter(function() {
-        return true
-      }).length < MAX_ENEMIES
-    ) {
+    while (this.enemies.length < MAX_ENEMIES) {
       this.addEnemy()
     }
   }
@@ -171,13 +173,18 @@ class Engine {
   addEnemy() {
     let enemySpots = GAME_WIDTH / ENEMY_WIDTH
 
-    let enemySpot = undefined
-    // Keep looping until we find a free enemy spot at random
-    while (!enemySpot || this.enemies[enemySpot]) {
-      enemySpot = Math.floor(Math.random() * enemySpots)
-    }
+    let spotsTaken = [false, false, false, false, false]
+    this.enemies.forEach(function(enemy) {
+      // Mark which spots have already been taken
+      spotsTaken[enemy.spot] = true
+    })
 
-    this.enemies[enemySpot] = new Enemy(this.root, enemySpot * ENEMY_WIDTH)
+    let candidate = undefined
+    // Keep looping until we find a free enemy spot at random
+    while (candidate === undefined || spotsTaken[candidate]) {
+      candidate = Math.floor(Math.random() * enemySpots)
+    }
+    this.enemies.push(new Enemy(this.root, candidate))
   }
 
   // This method kicks off the game
@@ -231,11 +238,13 @@ class Engine {
     this.player.render(this.ctx) // draw the player
 
     // Check if any enemies should die
-    this.enemies.forEach((enemy, enemyIdx) => {
+    this.enemies.forEach(enemy => {
       if (enemy.y > GAME_HEIGHT) {
-        this.enemies[enemyIdx].destroy()
-        delete this.enemies[enemyIdx]
+        enemy.destroy()
       }
+    })
+    this.enemies = this.enemies.filter(function(enemy) {
+      return !enemy.isDestroyed()
     })
     this.setupEnemies()
 
