@@ -28,11 +28,7 @@ At the moment, the game is a bit broken. This project will have you first fix th
 
 ## Basic assignments
 
-### 1. Let's fix the enemy bug
-
-If you look at the game running for a while, you will notice that an enemy never appears at the far left of the screen. This is due to a bug that was intentionally introduced in the `addEnemy` method of the `Engine` class. Find the bug and fix it.
-
-### 2. Let's make the game actually end
+### 1. Let's make the game actually end
 
 If a Nyan Cat gets to you and eats you, the game keeps going on. Let's fix this!
 
@@ -48,7 +44,7 @@ A good strategy would be to console.log both this.player and this.enemies. When 
 
 As a hint, note that the box of each enemy is defined by its `x` and `y` coordinates and the `ENEMY_WIDTH` and `ENEMY_HEIGHT` constants. There are similar variables for the player.
 
-### 3. Let's do some refactoring!
+### 2. Let's do some refactoring!
 
 Look at the `Player` and `Enemy` classes and notice that their `render` methods are identical. This violates our sacred DRY principle. Let's fix it!
 
@@ -58,11 +54,11 @@ Then, we'll make `Player` and `Enemy` extend the `Entity` class, and remove the 
 
 Having done this manipulation will break our constructors. Make sure to fix it by calling the appropriate function from your constructors.
 
-### 4. Flavor it!
+### 3. Flavor it!
 
 ---
 
-## 5. The sky is not the limit :sunglasses:
+## 4. The sky is not the limit :sunglasses:
 
 Having completed the basic section of this project is already great! However, this should leave you plenty of time for the fun part: customizing and evolving the game. Since this is an open-ended activity, we will give you some suggestions. Feel free to use them or not.
 
@@ -76,6 +72,6 @@ Having completed the basic section of this project is already great! However, th
 - Make the game more hardcore by allowing the player to also move up/down and making Nyan Cats also shoot from the left of the screen
 - **Don't stop!** These suggestions are only here to get you started :)
 
-### 6. Submission
+### 5. Submission
 
 You will make a 30 second recording using OBS. [Instructions on using OBS](https://docs.google.com/document/d/1ATihbD7BEzqAZoGkZTtZwDHJjTtTkdCEbYTg7eaFnO4/edit?usp=sharing). You will then upload the video on youtube and send the link to the teacher. All the videos will be presented in class.
